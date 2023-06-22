@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function ShelfPage() {
   const dispatch = useDispatch();
-  const user = useSelector(store=>store.userReducer);
+  const item = useSelector(store=>store.itemReducer);
 
+  
   const deleteBtn = (item) =>{
-    if(user.id === item.user_id){
-      dispatch({type:'DELETE_SHELF_ITEM', payload: item});
-    }
-    
+      dispatch({type:'DELETE_SHELF_ITEM', payload: item});    
   }
 
   return (
