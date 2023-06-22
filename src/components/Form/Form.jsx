@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Form() {
   let dispatch = useDispatch();
@@ -19,22 +19,30 @@ function Form() {
       type: "ADD_ITEM",
       payload: itemData,
     });
+    setDescription('')
+    setUrl('')
   }
 
   return (
-    
+
     <form onSubmit={(e) => submitTheData(e)}>
       <label>Description</label>
       <input
         type="text"
+        value={description}
         onChange={(e) => setDescription(e.target.value)}
         required
       />
       <label>Image URL</label>
-      <input type="text" onChange={(e) => setUrl(e.target.value)} required />
+      <input
+        type="text"
+        value={image_url}
+        onChange={(e) => setUrl(e.target.value)}
+        required 
+        />
       <input type="submit" value="Submit"></input>
     </form>
-   );
+  );
 }
 
 export default Form;
