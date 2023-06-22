@@ -7,6 +7,16 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   res.sendStatus(200); // For testing only, can be removed
+  const sqlText = 'SELECT * FROM "item";'
+  pool.query(sqlText)
+  console.log(sqlText)
+  .then(result => {
+    res.send(result.rows)
+  })
+  .catch(err => {
+    console.log('SERVER SIDE ERROR', err)
+    res.sendStatus(500)
+  })
 });
 
 /**
