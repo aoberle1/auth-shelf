@@ -6,7 +6,9 @@ function Form() {
   const [description, setDescription] = useState("");
   const [image_url, setUrl] = useState("");
 
-  function submitTheData() {
+
+  function submitTheData(event) {
+    event.preventDefault();
     console.log("YES");
     let itemData = {
       description,
@@ -19,7 +21,7 @@ function Form() {
   }
 
   return (
-    <form onSubmit={() => submitTheData()}>
+    <form onSubmit={(e) => submitTheData(e)}>
       <label>Description</label>
       <input
         type="text"
