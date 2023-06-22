@@ -6,21 +6,22 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  // res.sendStatus(200); // For testing only, can be removed
-  // const sqlText = `SELECT * FROM "item";`
+  if (req.isAuthenticated()) {
+    pool.query(`SELECT * FROM "item";`)
 
-  pool.query(`SELECT * FROM "item";`)
+      // console.log([sqlText])
 
-  // console.log([sqlText])
-
-  .then(results => {
-    console.log(results.rows)
-    res.send(results.rows)
-  })
-  .catch(err => {
-    console.log('SERVER SIDE ERROR', err)
-    res.sendStatus(500)
-  })
+      .then(results => {
+        console.log(results.rows)
+        res.send(results.rows)
+      })
+      .catch(err => {
+        console.log('SERVER SIDE ERROR', err)
+        res.sendStatus(500)
+      })
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 /**
@@ -37,13 +38,13 @@ router.delete('/:id', (req, res) => {
   // endpoint functionality
   let queryText = `DELETE FROM item WHERE id = $1`;
   pool.query(queryText, [req.params.id])
-    .then(response =>{
+    .then(response => {
       res.sendStatus(200);
-    }).catch(error =>{
+    }).catch(error => {
       res.sendStatus(500);
     })
 });
-  
+
 /**
  * Update an item if it's something the logged in user added
  */
