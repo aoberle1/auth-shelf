@@ -23,7 +23,16 @@ router.get('/', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
-  // endpoint functionality
+  let dataPackage = [req.body.description, req.body.image_url, req.user.id];
+  console.log(dataPackage);
+  let queryText = `
+    INSERT INTO item
+    ("description", "image_url", "user_id")
+    VALUES
+    ($1, $2, $3)
+    `;
+    pool.query(queryText, dataPackage);
+
 });
 
 /**
