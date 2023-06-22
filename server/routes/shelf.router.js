@@ -36,8 +36,15 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     VALUES
     ($1, $2, $3)
     `;
-    pool.query(queryText, dataPackage);
-});
+    pool.query(queryText, dataPackage)
+.then(result => {
+  res.sendStatus(200)
+  
+}).catch(err => {
+  console.log('oh no POST SERVER', err)
+  res.sendStatus(500)
+})
+})
 
 /**
  * Delete an item if it's something the logged in user added
