@@ -2,7 +2,7 @@
 
 const itemReducer = (state = {}, action) =>{
     switch(action.type){
-        case 'SET_SHELF':
+        case 'SET_ITEM':
             return action.payload;
         default:
             return state;
