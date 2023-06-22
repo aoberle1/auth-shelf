@@ -18,14 +18,6 @@ function ShelfPage() {
       <h2>Shelf</h2>
       <p>All of the available items can be seen here.</p>
       <ul>
-        {shelf.map(item=>(
-          <li>
-            {item.description}
-            <img src={item.image_url}/>
-            <button onClick={()=>deleteBtn(item)}>DELETE</button>
-            </li>
-          
-        ))}
       </ul>
     </div>
   );
