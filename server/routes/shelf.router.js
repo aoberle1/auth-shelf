@@ -29,7 +29,7 @@ router.delete('/:id', (req, res) => {
       res.sendStatus(500);
     })
 });
-
+  
 /**
  * Update an item if it's something the logged in user added
  */
