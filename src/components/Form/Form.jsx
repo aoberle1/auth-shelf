@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Form() {
   let dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [image_url, setUrl] = useState("");
+
 
 
   function submitTheData(event) {
@@ -18,11 +19,12 @@ function Form() {
       type: "ADD_ITEM",
       payload: itemData,
     });
-    setDescription("");
-    setUrl("");
+    setDescription('')
+    setUrl('')
   }
 
   return (
+
     <form onSubmit={(e) => submitTheData(e)}>
       <label>Description</label>
       <input
@@ -32,7 +34,12 @@ function Form() {
         required
       />
       <label>Image URL</label>
-      <input value={image_url} type="text" onChange={(e) => setUrl(e.target.value)} required />
+      <input
+        type="text"
+        value={image_url}
+        onChange={(e) => setUrl(e.target.value)}
+        required 
+        />
       <input type="submit" value="Submit"></input>
     </form>
   );

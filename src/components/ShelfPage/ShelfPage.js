@@ -6,6 +6,7 @@ import {useDispatch, useSelector } from 'react-redux'
 function ShelfPage() {
 const dispatch = useDispatch();
 let shelf = useSelector(store => store.shelf);
+let user = useSelector(store => store.user)
 
 useEffect( () => {
   dispatch({ type: 'FETCH_SHELF'});
@@ -15,8 +16,17 @@ useEffect( () => {
     <>
     <div className="container">
       <h2>Shelf</h2>
-      <Form />
-      <p>All of the available items can be seen here.</p>  
+      {
+        user.id ?
+         <Form />
+        
+      :
+      <>
+      <h1>GO LOG IN BUCKO </h1>
+      <p>Please Click the Login on the Nav Bar</p>
+     </> }
+      
+     <p>All of the available items can be seen here.</p>
        </div>
    <div>
       {shelf && shelf.map((item, i) => (

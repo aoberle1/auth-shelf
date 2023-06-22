@@ -1,32 +1,32 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 /**
  * Get all of the items on the shelf
  */
-router.get('/', (req, res) => {
-  // res.sendStatus(200); // For testing only, can be removed
-  // const sqlText = `SELECT * FROM "item";`
+router.get('/',  (req, res) => {
+    pool.query(`SELECT * FROM "item";`)
 
-  pool.query(`SELECT * FROM "item";`)
+      // console.log([sqlText])
 
-  // console.log([sqlText])
-
-  .then(results => {
-    console.log(results.rows)
-    res.send(results.rows)
-  })
-  .catch(err => {
-    console.log('SERVER SIDE ERROR', err)
-    res.sendStatus(500)
-  })
+      .then(results => {
+        console.log(results.rows)
+        res.send(results.rows)
+      })
+      .catch(err => {
+        console.log('SERVER SIDE ERROR', err)
+        res.sendStatus(500)
+      })
 });
 
 /**
  * Add an item for the logged in user to the shelf
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   let dataPackage = [req.body.description, req.body.image_url, req.user.id];
   console.log(dataPackage);
   let queryText = `
@@ -35,9 +35,15 @@ router.post('/', (req, res) => {
     VALUES
     ($1, $2, $3)
     `;
-    pool.query(queryText, dataPackage);
-
-});
+    pool.query(queryText, dataPackage)
+.then(result => {
+  res.sendStatus(200)
+  
+}).catch(err => {
+  console.log('oh no POST SERVER', err)
+  res.sendStatus(500)
+})
+})
 
 /**
  * Delete an item if it's something the logged in user added
@@ -64,7 +70,7 @@ router.delete('/:id', (req, res) => {
     res.sendStatus(403); //user either wasn't registered OR they weren't the person who added that item
   }
 });
-  
+
 /**
  * Update an item if it's something the logged in user added
  */
