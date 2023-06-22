@@ -8,12 +8,8 @@ import { useSelector } from 'react-redux';
 function* deleteShelfItem(action){
   const user = useSelector(store=>store.user);
   try{
-        if(action.item.user_id === user.id){
-            yield axios.delete(`/${action.item.id}`);
+            yield axios.delete(`/${action.item.id}`, {itemUserID:action.item.user_id});
             yield put({type: 'FETCH_SHELF'});
-        } else {
-            console.log('user did not add this so they cant delete haha');
-        }
         
     } catch (error) {
         console.log('deleteShelfItem does NOT work deleteShelf.saga.js =>', error);
