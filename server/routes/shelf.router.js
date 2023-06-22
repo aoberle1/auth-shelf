@@ -6,12 +6,16 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
-  const sqlText = 'SELECT * FROM "item";'
-  pool.query(sqlText)
-  console.log(sqlText)
-  .then(result => {
-    res.send(result.rows)
+  // res.sendStatus(200); // For testing only, can be removed
+  // const sqlText = `SELECT * FROM "item";`
+
+  pool.query(`SELECT * FROM "item";`)
+
+  // console.log([sqlText])
+
+  .then(results => {
+    console.log(results.rows)
+    res.send(results.rows)
   })
   .catch(err => {
     console.log('SERVER SIDE ERROR', err)
@@ -40,8 +44,27 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   // endpoint functionality
-});
+  //making sure my current user's id, the item's id, and the 'item.user_id' are all correct.
+  console.log('req.body.itemUserId =>', req.body.itemUserID);
+  console.log('req.params.id =>', req.params.id);
+  console.log('should be the current user id =>', req.user.id);
 
+  //conditional to make sure the user is authenticated, user is registered, and the user.id matches the item.user_id
+  // => the only person who can delete an item is the one who added it.
+  if(req.isAuthenticated() && req.user.id && req.user.id===req.body.itemUserID){
+    //the delete query
+    let queryText = `DELETE FROM item WHERE id = $1`;
+    pool.query(queryText, [req.params.id])
+      .then(response =>{
+        res.sendStatus(200);
+      }).catch(error =>{
+        res.sendStatus(500);
+      })
+  } else {
+    res.sendStatus(403); //user either wasn't registered OR they weren't the person who added that item
+  }
+});
+  
 /**
  * Update an item if it's something the logged in user added
  */
