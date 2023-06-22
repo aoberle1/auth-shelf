@@ -3,11 +3,11 @@ import {put, takeLatest} from 'redux-saga/effects';
 import { useSelector } from 'react-redux';
 
 
-const user = useSelector(store=>store.userReducer);
 
 //saga will be fired on 'DELETE_SHELF_ITEM' action type
 function* deleteShelfItem(action){
-    try{
+  const user = useSelector(store=>store.user);
+  try{
         if(action.item.user_id === user.id){
             yield axios.delete(`/${action.item.id}`);
             yield put({type: 'FETCH_SHELF'});
