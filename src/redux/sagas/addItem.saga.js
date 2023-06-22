@@ -6,7 +6,7 @@ function* addItem (action) {
   try {
     console.log( 'action.payload is:', action.payload);
     yield axios.post('/api/shelf', action.payload);
-    // yield put ('FETCH_SHELF');
+    yield put ('FETCH_SHELF');
   } catch (error) {
     console.log('error in POST is:', error);
   };
