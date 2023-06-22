@@ -6,12 +6,16 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
-  const sqlText = 'SELECT * FROM "item";'
-  pool.query(sqlText)
-  console.log(sqlText)
-  .then(result => {
-    res.send(result.rows)
+  // res.sendStatus(200); // For testing only, can be removed
+  // const sqlText = `SELECT * FROM "item";`
+
+  pool.query(`SELECT * FROM "item";`)
+
+  // console.log([sqlText])
+
+  .then(results => {
+    console.log(results.rows)
+    res.send(results.rows)
   })
   .catch(err => {
     console.log('SERVER SIDE ERROR', err)
