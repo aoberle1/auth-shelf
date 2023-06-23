@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 function Nav() {
   const user = useSelector((store) => store.user);
-
+  console.log('user is:', user.id);
   return (
     <div className="nav">
       <Link to="/home">
@@ -14,7 +14,7 @@ function Nav() {
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
-        {user.id === null &&
+        {!user.id &&
           // If there's no user, show login/registration links
           <Link className="navLink" to="/login">
             Login / Register
