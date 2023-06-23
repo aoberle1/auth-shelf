@@ -78,6 +78,32 @@ router.delete('/:id', (req, res) => {
  */
 router.put('/:id', (req, res) => {
   // endpoint functionality
+  console.log('req.params.id =>', req.params.id);
+  // console.log('should be the current user id =>', req.user.id);
+  // console.log('req.body from DELETE request is:', req.body.user_id);
+  console.log('into EDIT');
+  if(req.isAuthenticated() && req.user.id && req.user.id===req.body.user_id){
+    console.log('into if of EDIT');
+    console.log('req.body.image_url is:', req.body.image_url)
+    //the delete query
+    let queryText = ` UPDATE item 
+                      SET description = $1,
+                      image_url = $2
+                      WHERE id = $3
+                      `;
+    pool.query(queryText, [
+      req.body.description,
+      req.body.image_url,
+      req.params.id])
+      .then(response =>{
+        res.sendStatus(200);
+      }).catch(error =>{
+        res.sendStatus(500);
+      })
+  } else {
+    res.sendStatus(403); //user either wasn't registered OR they weren't the person who added that item
+  }
+
 });
 
 /**
