@@ -15,7 +15,7 @@ const handleDelete = (item) => {
             <h4>{item.description} </h4>
             
             <img src={item.image_url} />
-            {/* if the user was the user that added an item, they can delete it, otherwise the button won't show */}
+            {/* if the user was the user that added an item, they can delete it, otherwise the button won't */}
             {user.id===item.user_id &&(
                 <button onClick={()=> handleDelete(item)}>DELETE</button>
             )}
