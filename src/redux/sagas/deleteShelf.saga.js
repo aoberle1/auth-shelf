@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux';
 
 //saga will be fired on 'DELETE_SHELF_ITEM' action type
 function* deleteShelfItem(action){
+    
 //   const user = useSelector(store=>store.user);
   try{
-            yield axios.delete(`/api/shelf/${action.payload}`, {data: {user_id: action.payload.user_id} });
+            yield axios.delete(`/api/shelf/${action.payload.item.id}`, {data: {user_id: action.payload.item.user_id}});
             yield put({type: 'FETCH_SHELF'});
         
     } catch (error) {

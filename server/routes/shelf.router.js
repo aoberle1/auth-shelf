@@ -55,10 +55,11 @@ router.delete('/:id', (req, res) => {
   // console.log('req.body.itemUserId =>', req.body.itemUserID);
   console.log('req.params.id =>', req.params.id);
   console.log('should be the current user id =>', req.user.id);
+  console.log('req.body from DELETE request is:', req.body.user_id);
 
   //conditional to make sure the user is authenticated, user is registered, and the user.id matches the item.user_id
   // => the only person who can delete an item is the one who added it.
-  if(req.isAuthenticated() && req.user.id && req.user.id===req.body.itemUserID){
+  if(req.isAuthenticated() && req.user.id && req.user.id===req.body.user_id){
     //the delete query
     let queryText = `DELETE FROM item WHERE id = $1`;
     pool.query(queryText, [req.params.id])
