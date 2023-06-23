@@ -52,7 +52,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 router.delete('/:id', (req, res) => {
   // endpoint functionality
   //making sure my current user's id, the item's id, and the 'item.user_id' are all correct.
-  console.log('req.body.itemUserId =>', req.body.itemUserID);
+  // console.log('req.body.itemUserId =>', req.body.itemUserID);
   console.log('req.params.id =>', req.params.id);
   console.log('should be the current user id =>', req.user.id);
 
